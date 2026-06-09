@@ -1,23 +1,23 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;    
+    box-sizing: border-box;
+    outline: 1.5px solid orange;   
 }
 
 body {
     width: 100%;
     font-size: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Navigation Bar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 2px solid red;
-}
-
-ul {
-    /* display: flex; */
 }
 
 a {
@@ -26,6 +26,8 @@ a {
 
 }
 
+
+/* Welcome section */
 .welcome {
     background-color: lightblue;
     height: 250px;
@@ -36,7 +38,57 @@ a {
 }
 
 
-
-img {
-    max-width: 10%;
+/* Main content */
+.mainContent {
+    margin: auto;
+    width: 1160px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    
 }
+
+.bars, .contentBlocks {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+/* Bars */
+.bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: lightgray;
+    margin: 10px;
+}
+
+.bar div, .contentBlock div {
+    margin: 10px;
+}
+
+.bar:first-child {
+    width: 100%;
+}
+
+.bar:nth-child(2) {
+    width: 66.6%;
+}
+
+.bar:nth-child(3) {
+    flex: 1;
+}
+
+.bar img {
+    width: 80px;
+    height: 50px;
+}
+
+/* Content Block */
+.cont img {
+    width: 80px;
+    height: 100%;
+}
+
+
+
