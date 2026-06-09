@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;    
+}
+
+body {
+    width: 100%;
+    font-size: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid red;
+}
+
+ul {
+    /* display: flex; */
+}
+
+a {
+    margin: 5px;
+    border: 1px solid blue;
+
+}
+
+.welcome {
+    background-color: lightblue;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+
+
+img {
+    max-width: 10%;
+}
