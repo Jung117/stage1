@@ -3,7 +3,7 @@
 	<head>
 		<title>Jung's Website</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
-		<script src="./js/script.js"></script>
+		<script src="./js/script.js" defer></script>
         <!-- Responsive viewport for mobile -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	</head>
@@ -11,7 +11,8 @@
 	<body>
         <div class="navbar">
             <a class="logo">My Website</a>
-            <ul class="menu">
+            <button id="hamMenu" class="hamMenu">☰</button>
+            <ul id="menu" class="menu">
                 <a>Item 1</a>
                 <a>Item 2</a>
                 <a>Item 3</a>
@@ -81,8 +82,12 @@
                     <button class="star">★</button>
                     <div>Title 10</div>
                 </div>
-
             </div>
+        </div>
+
+        <!-- Overlay for popup menu -->
+        <div  id="overlay" class="overlay">
+            <button id="closeBtn" class="closeBtn">X</button>
         </div>
 	</body>
 </html>
