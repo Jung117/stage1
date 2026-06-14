@@ -41,7 +41,7 @@ a {
 }
 
 h1 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: 2rem;
 }
 
 
@@ -280,6 +280,11 @@ h1 {
     .bar1, .bar2, .block {
         margin-bottom: 20px;
     }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
 
     /* Popup menu */
     .hamMenu, .overlayActive, .closeBtn {
