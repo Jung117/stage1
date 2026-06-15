@@ -1,12 +1,41 @@
 ## Task 1
 def func1(name): 
-    # your code here 
-    pass
+    # [x-axis, y-axis, right/left ]: left side = 2; right side = 0
+    characters = {"悟空": [0, 0, 2], "辛巴": [-3, 3, 2], "丁滿": [-1, 4, 0], 
+                  "貝吉塔": [-4, -1, 2], "特南克斯": [1, -2, 2], "弗利沙": [4, -1, 0]}
+    closest = []
+    farthest = []
+    min, max = 0, 0
 
-# func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
-# func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
-# func1("弗利沙") # print 最遠辛巴，最近特南克斯 
-# func1("特南克斯") # print 最遠丁滿，最近悟空
+    for char in characters:
+        if char is not name:
+            
+            # Calculate distance from name to char  
+            distance = (abs(characters[name][0] - characters[char][0]) 
+                            + abs(characters[name][1] - characters[char][1]) 
+                                + abs(characters[name][2] - characters[char][2]))
+
+            # Update max if applicable
+            if distance > max:
+                farthest = [char]
+                max = distance
+            elif distance is max:
+                farthest += [char]
+
+            # Update min if applicable
+            if distance < min:
+                closest = [char]
+                min = distance
+            elif distance is min or min is 0:
+                closest += [char]
+                min = distance
+    
+    print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
+
+func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
+func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
+func1("弗利沙") # print 最遠辛巴，最近特南克斯 
+func1("特南克斯") # print 最遠丁滿，最近悟空
 
 
 
