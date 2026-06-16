@@ -1,57 +1,60 @@
 ## Task 1
-# def func1(name): 
+def func1(name): 
     
-#     # [x-axis, y-axis, right/left ]: left side = 2; right side = 0
-#     characters = {"悟空": [0, 0, 2], "辛巴": [-3, 3, 2], "丁滿": [-1, 4, 0], 
-#                   "貝吉塔": [-4, -1, 2], "特南克斯": [1, -2, 2], "弗利沙": [4, -1, 0]}
+    # [x-axis, y-axis, right/left ]: left side = 2; right side = 0
+    characters = {"悟空": [0, 0, 2], "辛巴": [-3, 3, 2], "丁滿": [-1, 4, 0], 
+                  "貝吉塔": [-4, -1, 2], "特南克斯": [1, -2, 2], "弗利沙": [4, -1, 0]}
     
-#     # Exit early if input character is not found
-#     if name not in characters:
-#         print(f"Character {name} not found.")
-#         return
+    # Exit early if input character is not found
+    if name not in characters:
+        print(f"Character {name} not found.")
+        return
     
-#     closest = []
-#     farthest = []
-#     minDiff, maxDiff = 0, 0
+    closest = []
+    farthest = []
+    minDiff, maxDiff = 0, 0
 
-#     for char in characters:
-#         if char != name:
+    for char in characters:
+        if char != name:
             
-#             # Calculate distance from name to char  
-#             distance = (abs(characters[name][0] - characters[char][0]) 
-#                             + abs(characters[name][1] - characters[char][1]) 
-#                                 + abs(characters[name][2] - characters[char][2]))
+            # Calculate distance from name to char  
+            distance = (abs(characters[name][0] - characters[char][0]) 
+                            + abs(characters[name][1] - characters[char][1]) 
+                                + abs(characters[name][2] - characters[char][2]))
 
-#             # Update maxDiff if applicable
-#             if distance > maxDiff:
-#                 farthest = [char]
-#                 maxDiff = distance
-#             elif distance is maxDiff:
-#                 farthest += [char]
+            # Update maxDiff if applicable
+            if distance > maxDiff:
+                farthest = [char]
+                maxDiff = distance
+            elif distance is maxDiff:
+                farthest += [char]
 
-#             # Update minDiff if applicable
-#             if distance < minDiff:
-#                 closest = [char]
-#                 minDiff = distance
-#             elif distance is minDiff or minDiff is 0:
-#                 closest += [char]
-#                 minDiff = distance
+            # Update minDiff if applicable
+            if distance < minDiff:
+                closest = [char]
+                minDiff = distance
+            elif distance is minDiff or minDiff is 0:
+                closest += [char]
+                minDiff = distance
     
-#     print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
+    print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
 
-# func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
-# func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
-# func1("弗利沙") # print 最遠辛巴，最近特南克斯 
-# func1("特南克斯") # print 最遠丁滿，最近悟空
+func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
+func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
+func1("弗利沙") # print 最遠辛巴，最近特南克斯 
+func1("特南克斯") # print 最遠丁滿，最近悟空
 
 
 
 ## Task 2
 booking = {}
 
-# Helper for parsing criteria value
-# Returns (True, Parsed value) if valid, (False, Raw value) if invalid
 def parseHelper(attr, value):
+    """
+    Helper for parsing criteria value
+    Returns (True, Parsed value) if valid, (False, Raw value) if invalid
+    """
+    
     if value[0] == "=":
         try:
             if value[1:] in booking:
