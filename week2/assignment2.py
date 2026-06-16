@@ -204,8 +204,17 @@ services=[
 
 ## Task 3
 def func3(index):
-    
-    pass
+    num = 25
+    for i in range(index):
+        if i % 4 == 0:
+            num -= 2
+        elif i % 4 == 1:
+            num -= 3
+        elif i % 4 == 2:
+            num += 1
+        else:
+            num += 2
+    print(num)
 
 # func3(1) # print 23 
 # func3(5) # print 21 
