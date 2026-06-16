@@ -202,6 +202,7 @@ services=[
 # func2(services, 8, 9, "c<=1500") # S2
 
 
+
 ## Task 3
 def func3(index):
     num = 25
@@ -225,9 +226,27 @@ def func3(index):
 
 ## Task 4
 def func4(sp, stat, n):
-    # your code here
-    pass
+    car = -1
+    vacancy = float('inf') # When passanger >= seats
+    overflow = float('inf') # When passanger < seats
+    for i in range(len(stat)):
+        # Check for avaiable cars
+        if stat[i] == "0":
+            # Find the best matching car
+            if sp[i] == n:
+                print(i)
+                return
+            elif sp[i] > n:
+                if (sp[i] - n) < vacancy:
+                    car = i
+                    vacancy = sp[i] - n
+            elif sp[i] < n and vacancy == float('inf'):
+                if (n - sp[i]) < overflow:
+                    car = i
+                    overflow = n - sp[i]
+    print(car)
+                
 
-# func4([3, 1, 5, 4, 3, 2], "101000", 2) # print 5
-# func4([1, 0, 5, 1, 3], "10100", 4) # print 4
-# func4([4, 6, 5, 8], "1000", 4) # print 2
+func4([3, 1, 5, 4, 3, 2], "101000", 2) # print 5
+func4([1, 0, 5, 1, 3], "10100", 4) # print 4
+func4([4, 6, 5, 8], "1000", 4) # print 2
