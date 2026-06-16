@@ -12,7 +12,7 @@
     
 #     closest = []
 #     farthest = []
-#     min, max = 0, 0
+#     minDiff, maxDiff = 0, 0
 
 #     for char in characters:
 #         if char != name:
@@ -22,20 +22,20 @@
 #                             + abs(characters[name][1] - characters[char][1]) 
 #                                 + abs(characters[name][2] - characters[char][2]))
 
-#             # Update max if applicable
-#             if distance > max:
+#             # Update maxDiff if applicable
+#             if distance > maxDiff:
 #                 farthest = [char]
-#                 max = distance
-#             elif distance is max:
+#                 maxDiff = distance
+#             elif distance is maxDiff:
 #                 farthest += [char]
 
-#             # Update min if applicable
-#             if distance < min:
+#             # Update minDiff if applicable
+#             if distance < minDiff:
 #                 closest = [char]
-#                 min = distance
-#             elif distance is min or min is 0:
+#                 minDiff = distance
+#             elif distance is minDiff or minDiff is 0:
 #                 closest += [char]
-#                 min = distance
+#                 minDiff = distance
     
 #     print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
 
@@ -46,38 +46,142 @@
 
 
 
-
 ## Task 2
 booking = {}
+
+# Helper for parsing criteria value
+# Returns (True, Parsed value) if valid, (False, Raw value) if invalid
+def parseHelper(attr, value):
+    if value[0] == "=":
+        try:
+            if value[1:] in booking:
+                return True, value[1:]
+            if attr == "c":
+                return True, int(value[1:])
+            else:
+                return True, float(value[1:])
+        except ValueError:
+            return False, value[1:]
+    else:
+        try:
+            if attr == "c":
+                return True, int(value[2:])
+            else:
+                return True, float(value[2:])
+        except ValueError:
+            return False, value[2:]
+
+
 def func2(ss, start, end, criteria): 
 
     # Terminate early if no services are available
-    if not services:
+    if not ss:
         print("No services available.")
         return
 
     # Create time slots for each service throughout the day: available = 0; taken = 1
     if not booking:
-        for service in services:
+        for service in ss:
             booking[service["name"]] = [0]*24
             
     
     closest = ""
-    min = float('inf')
+    minDiff = float('inf')
+    if criteria[0] == "c":
+        # Validate and parse criteria value
+        valid, value = parseHelper(criteria[0], criteria[1:])
+        if not valid :
+            print(f"Invalid criteria {criteria}.")
+            return
+        
+        # Find the best matching service
+        for service in ss:
+            if criteria[1] == ">":
+                if service["c"] >= value:
+                    if (service["c"] - value) <= minDiff:
+                        for i in range(start+1, end):
+                            if booking[service["name"]][i] == 1:
+                                break
+                        else:
+                            closest = service["name"]
+                            minDiff = (service["c"] - value)
+            else:
+                if service["c"] <= value:
+                    if not closest:
+                        closest = service["name"]
+                    if (value - service["c"]) <= minDiff:
+                        for i in range(start+1, end):
+                            if booking[service["name"]][i] == 1:
+                                break
+                        else:
+                            closest = service["name"]
+                            minDiff = (value - service["c"])
 
-    if criteria[0] == "c" and criteria[1] in (">", "=", "<"):
-        for service in services:
-            pass
+        # Output the result
+        if not closest:
+            print("Sorry")
+        else:
+            for i in range(start, end+1):
+                booking[closest][i] = 1
+            print(closest)
 
-    elif criteria[0] == "r" and criteria[1] in (">", "=", "<"):
-        for service in services:
-            pass
-    elif criteria[:4] == "name" and criteria[4] == "=":
-        for service in services:
-            pass
+    elif criteria[0] == "r":
+        # Validate and parse criteria value
+        valid, value = parseHelper(criteria[0], criteria[1:])
+        if not valid :
+            print(f"Invalid criteria {criteria}.")
+            return
+        
+        # Find the best matching service
+        for service in ss:
+            if criteria[1] == ">":
+                if service["r"] >= value:
+                    if (service["r"] - value) <= minDiff:
+                        for i in range(start+1, end):
+                            if booking[service["name"]][i] == 1:
+                                break
+                        else:
+                            closest = service["name"]
+                            minDiff = (service["r"] - value)  
+            else:
+                if service["r"] <= value:
+                    if not closest:
+                        closest = service["name"]
+                    if (value - service["r"]) <= minDiff:
+                        for i in range(start+1, end):
+                            if booking[service["name"]][i] == 1:
+                                break
+                        else:
+                            closest = service["name"]
+                            minDiff = (value - service["r"])
+
+        # Output the result
+        if not closest:
+            print("Sorry")
+        else:
+            for i in range(start, end+1):
+                booking[closest][i] = 1
+            print(closest)
+
+    elif criteria[:4] == "name":
+        # Validate and parse criteria value
+        valid, value = parseHelper(criteria[:4], criteria[4:])
+        if not valid:
+            print(f"Service {criteria[5:]} not found.")
+            return
+        
+        # Check time slot availability 
+        for i in range(start+1, end):
+            if booking[value][i] == 1:
+                print("Sorry")
+                return
+        else:
+            for i in range(start, end+1):
+                booking[value][i] = 1
+            print(value)
+
     else:
-        print(f"Invalid input for criteria {criteria}.")
-
+        print(f"Invalid criteria {criteria}.")
     
 
 services=[ 
@@ -86,14 +190,13 @@ services=[
     {"name":"S3", "r":3.8, "c":800}  
 ] 
 
-# func2(services, 15, 17, "c>=800") # S3 
-# func2(services, 11, 13, "r<=4") # S3 
+func2(services, 15, 17, "c>=800") # S3
+func2(services, 11, 13, "r<=4") # S3
 func2(services, 10, 12, "name=S3") # Sorry 
-# func2(services, 15, 18, "r>=4.5") # S1 
-# func2(services, 16, 18, "r>=4") # Sorry 
-# func2(services, 13, 17, "name=S1") # Sorry 
-# func2(services, 8, 9, "c<=1500") # S2
-
+func2(services, 15, 18, "r>=4.5") # S1 
+func2(services, 16, 18, "r>=4") # Sorry 
+func2(services, 13, 17, "name=S1") # Sorry 
+func2(services, 8, 9, "c<=1500") # S2
 
 
 ## Task 3
