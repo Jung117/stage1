@@ -55,13 +55,13 @@ function func1(name) {
     console.log("最遠" + farthest.join("、") + "；最近" + closest.join("、"));
 } 
 
-func1("辛巴"); // print 最遠弗利沙；最近丁滿、貝吉塔 
-func1("悟空"); // print 最遠丁滿、弗利沙；最近特南克斯 
-func1("弗利沙"); // print 最遠辛巴，最近特南克斯 
-func1("特南克斯"); // print 最遠丁滿，最近悟空
+// func1("辛巴"); // print 最遠弗利沙；最近丁滿、貝吉塔 
+// func1("悟空"); // print 最遠丁滿、弗利沙；最近特南克斯 
+// func1("弗利沙"); // print 最遠辛巴，最近特南克斯 
+// func1("特南克斯"); // print 最遠丁滿，最近悟空
+
 
 /*
-
 // Task 2
 // your code here, maybe function 
 func2(ss, start, end, criteria) { 
@@ -80,21 +80,34 @@ func2(services, 15, 18, "r>=4.5"); // S1
 func2(services, 16, 18, "r>=4"); // Sorry 
 func2(services, 13, 17, "name=S1"); // Sorry 
 func2(services, 8, 9, "c<=1500"); // S2
+*/
 
 
 
 // Task 3
 function func3(index) { 
-    // your code here 
+    let num = 25;
+    for (let i=0; i < index; i++) {
+        if (i % 4 == 0) {
+            num -= 2;
+        } else if (i % 4 == 1) {
+            num -= 3;
+        } else if (i % 4 == 2) {
+            num += 1;
+        } else {
+            num += 2;
+        }
+    }
+    console.log(num);
 }
 
-func3(1); // print 23 
-func3(5); // print 21 
-func3(10); // print 16 
-func3(30); // print 6
+// func3(1); // print 23 
+// func3(5); // print 21 
+// func3(10); // print 16 
+// func3(30); // print 6
 
 
-
+/*
 // Task 4
 function func4(sp, stat, n) { 
     // your code here 
