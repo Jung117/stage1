@@ -33,28 +33,28 @@ def func1(name):
             if distance < minDiff:
                 closest = [char]
                 minDiff = distance
-            elif distance is minDiff or minDiff is 0:
+            elif distance == minDiff or minDiff == 0:
                 closest += [char]
                 minDiff = distance
     
     print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
 
-func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
-func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
-func1("弗利沙") # print 最遠辛巴，最近特南克斯 
-func1("特南克斯") # print 最遠丁滿，最近悟空
+# func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
+# func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
+# func1("弗利沙") # print 最遠辛巴，最近特南克斯 
+# func1("特南克斯") # print 最遠丁滿，最近悟空
 
 
 
 ## Task 2
-booking = {}
+booking = {}    # Available timeslots for each service
 
 def parseHelper(attr, value):
     """
     Helper for parsing criteria value
     Returns (True, Parsed value) if valid, (False, Raw value) if invalid
     """
-    
+
     if value[0] == "=":
         try:
             if value[1:] in booking:
@@ -73,8 +73,8 @@ def parseHelper(attr, value):
                 return True, float(value[2:])
         except ValueError:
             return False, value[2:]
-
-
+ 
+ 
 def func2(ss, start, end, criteria): 
 
     # Terminate early if no services are available
@@ -82,7 +82,7 @@ def func2(ss, start, end, criteria):
         print("No services available.")
         return
 
-    # Create time slots for each service throughout the day: available = 0; taken = 1
+    # Create timeslots for each service throughout the day: available = 0; taken = 1
     if not booking:
         for service in ss:
             booking[service["name"]] = [0]*24
@@ -173,7 +173,7 @@ def func2(ss, start, end, criteria):
             print(f"Service {criteria[5:]} not found.")
             return
         
-        # Check time slot availability 
+        # Check timeslot availability 
         for i in range(start+1, end):
             if booking[value][i] == 1:
                 print("Sorry")
@@ -193,18 +193,18 @@ services=[
     {"name":"S3", "r":3.8, "c":800}  
 ] 
 
-func2(services, 15, 17, "c>=800") # S3
-func2(services, 11, 13, "r<=4") # S3
-func2(services, 10, 12, "name=S3") # Sorry 
-func2(services, 15, 18, "r>=4.5") # S1 
-func2(services, 16, 18, "r>=4") # Sorry 
-func2(services, 13, 17, "name=S1") # Sorry 
-func2(services, 8, 9, "c<=1500") # S2
+# func2(services, 15, 17, "c>=800") # S3
+# func2(services, 11, 13, "r<=4") # S3
+# func2(services, 10, 12, "name=S3") # Sorry 
+# func2(services, 15, 18, "r>=4.5") # S1 
+# func2(services, 16, 18, "r>=4") # Sorry 
+# func2(services, 13, 17, "name=S1") # Sorry 
+# func2(services, 8, 9, "c<=1500") # S2
 
 
 ## Task 3
 def func3(index):
-    # your code here
+    
     pass
 
 # func3(1) # print 23 
