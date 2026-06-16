@@ -17,7 +17,7 @@ def func1(name):
     for char in characters:
         if char != name:
             
-            # Calculate distance from name to char  
+            # Calculate distance between name and char  
             distance = (abs(characters[name][0] - characters[char][0]) 
                             + abs(characters[name][1] - characters[char][1]) 
                                 + abs(characters[name][2] - characters[char][2]))
