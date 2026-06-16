@@ -63,10 +63,186 @@ function func1(name) {
 
 
 // Task 2
-// your code here, maybe function 
-func2(ss, start, end, criteria) { 
-    // your code here 
-} 
+const booking = new Map();  // Available timeslots for each service
+
+/* Helper for parsing criteria value
+   Returns (True, Parsed value) if valid, (False, Raw value) if invalid */
+function parseHelper(value) {
+    if (value[0] == "=") {
+        if (booking.has(value.slice(1))) {
+            return value.slice(1);
+        }
+
+        if (attr == "c") {
+            return parseInt(value.slice(1));
+        } else {
+            return parseFloat(value.slice(1));
+        }
+    } else {
+        if (attr == "c") {
+            return parseInt(value.slice(2));
+        } else {
+            return parseFloat(value.slice(2));
+        }
+    }
+}
+
+function func2(ss, start, end, criteria) { 
+    // Exit early if no services are available
+    if (ss.length == 0) {
+        console.log("No services available.")
+    }
+
+    // Create timeslots for each service throughout the day: available = 0; taken = 1
+    if (booking.length != 0) {
+        ss.forEach((service) => {
+            booking[service["name"]] = new Array(24).fill(0);
+        })
+    }
+
+
+    let closest = "";   // The current best matching service
+    let minDiff = Infinity;  // Difference between criteria and the service
+    let found = false;  // If the timeslot is taken
+    if (criteria[0] == "c") {
+        // Parse criteria value
+        value = parseHelper(value.slice(1));
+        if (isNaN(value)) {
+            console.log("Invalid criteria " + criteria);
+            return;
+        }
+
+        // Find the best-matching sevice
+        ss.forEach((service) => {
+            if (value.slice(1) == ">") {
+                if (service.get("c") >= value) {
+                    if ((service.get("c") - value) <= minDiff) {
+                        for (let i=start+1; i < end; i++) {
+                            if (booking.get(service["name"])[i] == 1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            closest = service.get("name");
+                            minDiff = value - service.get("c");
+                        }
+                    }
+                }
+            } else {
+                if (service.get("c") <= value) {
+                    if (closest != []) {
+                        closest = service.get("name");
+                    }
+
+                    if (value - (service.get("c")) <= minDiff) {
+                        for (let i=start+1; i < end; i++) {
+                            if (booking.get(service["name"])[i] == 1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            closest = service.get("name");
+                            minDiff = service.get("c") - value;
+                        }
+                    }
+                }
+            }
+        })
+
+        // Output the result
+        if (closest != []) {
+            console.log("Sorry")
+        } else {
+            for (let i=start; i < end+1; i++) {
+                booking.get(closest)[i] = 1;
+            }
+            console.log(closest);
+        }
+    } else if (criteria[0] == "r") {
+        // Parse criteria value
+        value = parseHelper(value.slice(1));
+        if (isNaN(value)) {
+            console.log("Invalid criteria " + criteria);
+            return;
+        }
+
+        // Find the best matching sevice
+        ss.forEach((service) => {
+            if (value.slice(1) == ">") {
+                if (service.get("r") >= value) {
+                    if ((service.get("r") - value) <= minDiff) {
+                        for (let i=start+1; i < end; i++) {
+                            if (booking.get(service["name"])[i] == 1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            closest = service.get("name");
+                            minDiff = value - service.get("r");
+                        }
+                    }
+                }
+            } else {
+                if (service.get("r") <= value) {
+                    if (closest != []) {
+                        closest = service.get("name");
+                    }
+
+                    if (value - (service.get("r")) <= minDiff) {
+                        for (let i=start+1; i < end; i++) {
+                            if (booking.get(service["name"])[i] == 1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            closest = service.get("name");
+                            minDiff = service.get("r") - value;
+                        }
+                    }
+                }
+            }
+        })
+
+        // Output the result
+        if (closest != []) {
+            console.log("Sorry")
+        } else {
+            for (let i=start; i < end+1; i++) {
+                booking.get(closest)[i] = 1;
+            }
+            console.log(closest);
+        }
+    } else if (criteria.slice(0, 4) == "name") {
+        // Parse criteria value
+        value = parseHelper(value.slice(4));
+        if (isNaN(value)) {
+            console.log("Service " + criteria.slice(5) + "not found.");
+            return;
+        }
+
+        // Check timeslot availability
+        for (let i=start+1; i < end; i++) {
+            if (booking.get(service["name"])[i] == 1) {
+                found = true;
+                console.log("Sorry")
+                return;
+            }
+        }
+        if (!found) {
+            for (let i=start; i < end+1; i++) {
+                booking.get(value)[i] = 1;
+            }
+            console.log(value);
+        }
+    } else {
+        console.log("Invalid criteria" + criteria);
+    }
+}
+
 const services=[ 
     {"name":"S1", "r":4.5, "c":1000}, 
     {"name":"S2", "r":3, "c":1200}, 

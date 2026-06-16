@@ -61,6 +61,7 @@ def parseHelper(attr, value):
         try:
             if value[1:] in booking:
                 return True, value[1:]
+                
             if attr == "c":
                 return True, int(value[1:])
             else:
@@ -76,7 +77,6 @@ def parseHelper(attr, value):
         except ValueError:
             return False, value[2:]
  
- 
 def func2(ss, start, end, criteria): 
 
     # Terminate early if no services are available
@@ -90,8 +90,8 @@ def func2(ss, start, end, criteria):
             booking[service["name"]] = [0]*24
             
     
-    closest = ""
-    minDiff = float('inf')
+    closest = "" # The current best-matching service
+    minDiff = float('inf')  # Difference between criteria and the service
     if criteria[0] == "c":
         # Validate and parse criteria value
         valid, value = parseHelper(criteria[0], criteria[1:])
