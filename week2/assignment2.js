@@ -28,10 +28,7 @@ function func1(name) {
                         Math.abs(characters.get(name)[1] - pos[1]) + 
                           Math.abs(characters.get(name)[2] - pos[2]));
             
-            
-            
             // Update maxDiff if applicable
-            
             if (distance > maxDiff) {
                 farthest = [char];
                 maxDiff = distance;
@@ -47,18 +44,15 @@ function func1(name) {
                 closest.push(char);
                 minDiff = distance;
             }
-    
-            
-        
         }
     });
     console.log("最遠" + farthest.join("、") + "；最近" + closest.join("、"));
 } 
 
-// func1("辛巴"); // print 最遠弗利沙；最近丁滿、貝吉塔 
-// func1("悟空"); // print 最遠丁滿、弗利沙；最近特南克斯 
-// func1("弗利沙"); // print 最遠辛巴，最近特南克斯 
-// func1("特南克斯"); // print 最遠丁滿，最近悟空
+func1("辛巴"); // print 最遠弗利沙；最近丁滿、貝吉塔 
+func1("悟空"); // print 最遠丁滿、弗利沙；最近特南克斯 
+func1("弗利沙"); // print 最遠辛巴，最近特南克斯 
+func1("特南克斯"); // print 最遠丁滿，最近悟空
 
 
 
@@ -125,6 +119,7 @@ function func2(ss, start, end, criteria) {
                                 break;
                             }
                         }
+
                         if (!found) {
                             closest = service.name;
                             minDiff = service.c - value;
@@ -143,6 +138,7 @@ function func2(ss, start, end, criteria) {
                                 break;
                             }
                         }
+
                         if (!found) {
                             closest = service.name;
                             minDiff = value - service.c;
@@ -152,7 +148,6 @@ function func2(ss, start, end, criteria) {
             }
         })
 
-        
         // Output the result
         if (closest == "") {
             console.log("Sorry")
@@ -182,6 +177,7 @@ function func2(ss, start, end, criteria) {
                                 break;
                             }
                         }
+
                         if (!found) {
                             closest = service.name;
                             minDiff = service.r - value;
@@ -201,6 +197,7 @@ function func2(ss, start, end, criteria) {
                                 break;
                             }
                         }
+
                         if (!found) {
                             closest = service.name;
                             minDiff = value - service.r;
@@ -262,7 +259,6 @@ func2(services, 8, 9, "c<=1500"); // S2
 
 
 
-
 // Task 3
 function func3(index) { 
     let num = 25;
@@ -280,10 +276,10 @@ function func3(index) {
     console.log(num);
 }
 
-// func3(1); // print 23 
-// func3(5); // print 21 
-// func3(10); // print 16 
-// func3(30); // print 6
+func3(1); // print 23 
+func3(5); // print 21 
+func3(10); // print 16 
+func3(30); // print 6
 
 
 
@@ -315,7 +311,6 @@ function func4(sp, stat, n) {
     console.log(car)
 }
 
-// func4([3, 1, 5, 4, 3, 2], "101000", 2); // print 5 
-// func4([1, 0, 5, 1, 3], "10100", 4); // print 4 
-// func4([4, 6, 5, 8], "1000", 4); // print 2
-
+func4([3, 1, 5, 4, 3, 2], "101000", 2); // print 5 
+func4([1, 0, 5, 1, 3], "10100", 4); // print 4 
+func4([4, 6, 5, 8], "1000", 4); // print 2
