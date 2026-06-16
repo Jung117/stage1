@@ -1,4 +1,4 @@
-console.log("Hello!");
+console.log("Assignment 2");
 // Task 1
 function func1(name) {
 
@@ -61,7 +61,7 @@ function func1(name) {
 // func1("特南克斯"); // print 最遠丁滿，最近悟空
 
 
-/*
+
 // Task 2
 // your code here, maybe function 
 func2(ss, start, end, criteria) { 
@@ -80,7 +80,7 @@ func2(services, 15, 18, "r>=4.5"); // S1
 func2(services, 16, 18, "r>=4"); // Sorry 
 func2(services, 13, 17, "name=S1"); // Sorry 
 func2(services, 8, 9, "c<=1500"); // S2
-*/
+
 
 
 
