@@ -117,17 +117,17 @@ def func2(ss, start, end, criteria):
                         closest = service["name"]
 
                     if (value - service["c"]) <= minDiff:
-                        print("In")
-                        print(service["name"])
-                        # Loop被略過了 因為start=8 and end=9
+                        # Loop被略過了 因為 start=8 and end=9
+                        # 另外檢查 2個連續時間的請求? 有沒有能共用的?
                         for i in range(start+1, end):
                             print("In loop")
                             print(booking[service["name"]][i] == 1)
                             if booking[service["name"]][i] == 1:
+                                print(f"Timeslot {i} is it 1: {booking[service["name"]][i] == 1}")
                                 print("Break")
                                 break
                         else:
-                            print("Here")
+                            print("Pass! Recor the new service")
                             closest = service["name"]
                             minDiff = (value - service["c"])
 
