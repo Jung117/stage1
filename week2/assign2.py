@@ -40,11 +40,11 @@ def func1(name):
     print(f"最遠{'、'.join(farthest)}；最近{'、'.join(closest)}")
 
 
-print()
-func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
-func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
-func1("弗利沙") # print 最遠辛巴，最近特南克斯 
-func1("特南克斯") # print 最遠丁滿，最近悟空
+# print()
+# func1("辛巴") # print 最遠弗利沙；最近丁滿、貝吉塔 
+# func1("悟空") # print 最遠丁滿、弗利沙；最近特南克斯 
+# func1("弗利沙") # print 最遠辛巴，最近特南克斯 
+# func1("特南克斯") # print 最遠丁滿，最近悟空
 
 
 
@@ -112,13 +112,22 @@ def func2(ss, start, end, criteria):
                             minDiff = (service["c"] - value)
             else:
                 if service["c"] <= value:
+                    
                     if not closest:
                         closest = service["name"]
+
                     if (value - service["c"]) <= minDiff:
+                        print("In")
+                        print(service["name"])
+                        # Loop被略過了 因為start=8 and end=9
                         for i in range(start+1, end):
+                            print("In loop")
+                            print(booking[service["name"]][i] == 1)
                             if booking[service["name"]][i] == 1:
+                                print("Break")
                                 break
                         else:
+                            print("Here")
                             closest = service["name"]
                             minDiff = (value - service["c"])
 
@@ -202,9 +211,12 @@ func2(services, 11, 13, "r<=4") # S3
 func2(services, 10, 12, "name=S3") # Sorry 
 func2(services, 15, 18, "r>=4.5") # S1 
 func2(services, 16, 18, "r>=4") # Sorry 
-func2(services, 13, 17, "name=S1") # Sorry 
+func2(services, 13, 17, "name=S1") # Sorry
+print(booking) 
 func2(services, 8, 9, "c<=1500") # S2
+print(booking)
 func2(services, 8, 9, "c<=1500") # S1
+print(booking)
 
 
 
@@ -223,11 +235,11 @@ def func3(index):
     print(num)
 
 
-print()
-func3(1) # print 23 
-func3(5) # print 21 
-func3(10) # print 16 
-func3(30) # print 6
+# print()
+# func3(1) # print 23 
+# func3(5) # print 21 
+# func3(10) # print 16 
+# func3(30) # print 6
 
 
 
@@ -254,7 +266,7 @@ def func4(sp, stat, n):
     print(car)
                 
 
-print()
-func4([3, 1, 5, 4, 3, 2], "101000", 2) # print 5
-func4([1, 0, 5, 1, 3], "10100", 4) # print 4
-func4([4, 6, 5, 8], "1000", 4) # print 2
+# print()
+# func4([3, 1, 5, 4, 3, 2], "101000", 2) # print 5
+# func4([1, 0, 5, 1, 3], "10100", 4) # print 4
+# func4([4, 6, 5, 8], "1000", 4) # print 2
