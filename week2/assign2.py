@@ -76,12 +76,33 @@ def parseHelper(attr, value):
                 return True, float(value[2:])
         except ValueError:
             return False, value[2:]
+        
+def timeslotIsFree(service, start, end):
+    """
+    Helper for checking if the requested timeslot is available for the given service.
+    Returns True if the timeslot is free; False if it is already booked.
+    """
+    if end - start > 1:
+        for i in range(start+1, end):
+            if booking[service][i] == 1:
+                return False
+    else:
+        if (booking[service][start] == 1 and booking[service][end] == 1):
+            return False
+    
+    return True 
+
  
 def func2(ss, start, end, criteria): 
 
     # Terminate early if no services are available
     if not ss:
         print("No services available.")
+        return
+    
+    # Terminate early if the requested time range is invalid
+    if (end - start <= 0 or start > 24 or end < 0):
+        print("Invalid time range requested.")
         return
 
     # Create timeslots for each service throughout the day: available = 0; taken = 1
@@ -104,30 +125,16 @@ def func2(ss, start, end, criteria):
             if criteria[1] == ">":
                 if service["c"] >= value:
                     if (service["c"] - value) <= minDiff:
-                        for i in range(start+1, end):
-                            if booking[service["name"]][i] == 1:
-                                break
-                        else:
+                        if timeslotIsFree(service["name"], start, end):
                             closest = service["name"]
                             minDiff = (service["c"] - value)
             else:
                 if service["c"] <= value:
-                    
                     if not closest:
                         closest = service["name"]
 
                     if (value - service["c"]) <= minDiff:
-                        # Loop被略過了 因為 start=8 and end=9
-                        # 另外檢查 2個連續時間的請求? 有沒有能共用的?
-                        for i in range(start+1, end):
-                            print("In loop")
-                            print(booking[service["name"]][i] == 1)
-                            if booking[service["name"]][i] == 1:
-                                print(f"Timeslot {i} is it 1: {booking[service["name"]][i] == 1}")
-                                print("Break")
-                                break
-                        else:
-                            print("Pass! Recor the new service")
+                        if timeslotIsFree(service["name"], start, end):
                             closest = service["name"]
                             minDiff = (value - service["c"])
 
@@ -151,21 +158,15 @@ def func2(ss, start, end, criteria):
             if criteria[1] == ">":
                 if service["r"] >= value:
                     if (service["r"] - value) <= minDiff:
-                        for i in range(start+1, end):
-                            if booking[service["name"]][i] == 1:
-                                break
-                        else:
+                        if timeslotIsFree(service["name"], start, end):
                             closest = service["name"]
-                            minDiff = (service["r"] - value)  
+                            minDiff = (service["r"] - value) 
             else:
                 if service["r"] <= value:
                     if not closest:
                         closest = service["name"]
                     if (value - service["r"]) <= minDiff:
-                        for i in range(start+1, end):
-                            if booking[service["name"]][i] == 1:
-                                break
-                        else:
+                        if timeslotIsFree(service["name"], start, end):
                             closest = service["name"]
                             minDiff = (value - service["r"])
 
@@ -212,11 +213,9 @@ func2(services, 10, 12, "name=S3") # Sorry
 func2(services, 15, 18, "r>=4.5") # S1 
 func2(services, 16, 18, "r>=4") # Sorry 
 func2(services, 13, 17, "name=S1") # Sorry
-print(booking) 
 func2(services, 8, 9, "c<=1500") # S2
-print(booking)
 func2(services, 8, 9, "c<=1500") # S1
-print(booking)
+print("Answer: S3 S3 Sorry S1 Sorry Sorry S2 S1")
 
 
 
