@@ -51,9 +51,14 @@ func1("特南克斯") # print 最遠丁滿，最近悟空
 booking = {}    # Available timeslots for each service
 
 def parseHelper(attr, value):
-    """
-    Helper for parsing criteria value
-    Returns (True, Parsed value) if valid, (False, Raw value) if invalid
+    """ Helper for parsing criteria value
+
+    Args:
+        attr(string): The criteria being parsed {"c", "r", "name"}
+        value(string): The criteria string
+
+    Returns:
+        tuple: (True, Parsed value) if valid, (False, Raw value) if invalid
     """
 
     if value[0] == "=":
@@ -78,10 +83,17 @@ def parseHelper(attr, value):
         
 
 def timeslotIsFree(service, start, end):
+    """ Helper for checking if the requested timeslot is available for the given service.
+
+    Args:
+        service(str): The name of the service
+        start(int): Start hour
+        end(int): End hour
+
+    Returns:
+        boolean: True if the timeslot is free; False if it is already booked
     """
-    Helper for checking if the requested timeslot is available for the given service.
-    Returns True if the timeslot is free; False if it is already booked.
-    """
+
     if end - start > 1:
         for i in range(start+1, end):
             if booking[service][i] == 1:
@@ -94,15 +106,20 @@ def timeslotIsFree(service, start, end):
 
 
 def updateBooking(service, start, end):
+    """ Mark the given service's timeslot as taken (1) from start to end
+    
+    Args:
+        service(str): The name of the service to update
+        start(int): The start time of the booking
+        end(int): The end time of the booking
     """
-    Mark the given service's timeslot as taken (1) from start to end
-    """
+
     for i in range(start, end+1):
         booking[service][i] = 1
 
  
 def func2(ss, start, end, criteria): 
-
+    
     # Terminate early if no services are available
     if not ss:
         print("No services available.")
@@ -119,6 +136,7 @@ def func2(ss, start, end, criteria):
             booking[service["name"]] = [0]*24
             
     
+    # Begin main logic
     closest = "" # The current best-matching service
     minDiff = float('inf')  # Difference between criteria and the service
     if criteria[0] == "c":

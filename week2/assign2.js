@@ -53,14 +53,20 @@ func1("辛巴"); // print 最遠弗利沙；最近丁滿、貝吉塔
 func1("悟空"); // print 最遠丁滿、弗利沙；最近特南克斯 
 func1("弗利沙"); // print 最遠辛巴，最近特南克斯 
 func1("特南克斯"); // print 最遠丁滿，最近悟空
+console.log("");
 
 
 
 // Task 2
 const booking = new Map();  // Available timeslots for each service
 
-/* Helper for parsing criteria value
-   Returns (True, Parsed value) if valid, (False, Raw value) if invalid */
+/**
+ * Helper for parsing criteria value. 
+ * 
+ * @param {string} attr - The criteria being parsed {"c", "r", "name"}
+ * @param {string} value - The criteria string
+ * @returns {string|number} The parsed name of the criteria or the parsed numeric value of the criteria
+ */
 function parseHelper(attr, value) {
     if (value[0] == "=") {
         if (booking.has(value.slice(1))) {
@@ -81,23 +87,70 @@ function parseHelper(attr, value) {
     }
 }
 
+
+/** 
+ * Helper for checking if the requested timeslot is available for the given service.
+ * 
+ * @param {string} serviceName - The name of the service
+ * @param {number} start - Start hour 
+ * @param {number} end - End hour
+ * @returns {boolean} True if the timeslot is free; False if it is already booked
+*/
+function timeslotIsFree(serviceName, start, end) {
+    // console.log(booking.get(service));
+    if (end - start > 1) {
+        for(let i = start+1; i < end; i++) {
+            if (booking.get(serviceName)[i] == 1) {
+                return false;
+            }
+        }
+    } else {
+        if (booking.get(serviceName)[start] == 1 &&
+             booking.get(serviceName)[end] == 1) {
+                return false;
+             }
+    }
+    return true;
+}
+
+
+/**
+ * Helper for updating the booking timeslot of a given service.
+ * 
+ * @param {string} serviceName - The name of the service to update 
+ * @param {number} start - The start time of the booking
+ * @param {number} end - The end time of the booking
+ */
+function updateBooking(serviceName, start, end) {
+    for (let i=start; i <= end; i++) {
+        booking.get(serviceName)[i] = 1;
+    }
+}
+
+
 function func2(ss, start, end, criteria) { 
     // Exit early if no services are available
     if (ss.length == 0) {
         console.log("No services available.")
+        return;
     }
 
-    // Create timeslots for each service throughout the day: available = 0; taken = 1
+    // Exit early if the requested time range is invalid
+    if (end - start <= 0 || start > 24 || end < 0) {
+        console.log("Invalid time range requested.");
+        return;
+    }
+
+    // Create empty timeslots for each service throughout the day: available = 0; taken = 1
     if (booking.size == 0) {
         ss.forEach((service) => {
             booking.set(service.name, new Array(24).fill(0));
         })
     }
 
-
+    // Begin main logic
     let closest = "";   // The current best matching service
     let minDiff = Infinity;  // Difference between criteria and the service
-    let found = false;  // If the timeslot is taken
     let value = "";
     if (criteria[0] == "c") {
         // Parse criteria value
@@ -109,18 +162,10 @@ function func2(ss, start, end, criteria) {
 
         // Find the best-matching sevice
         ss.forEach((service) => {
-            found = false;
             if (criteria.slice(1, 3) == ">=") {
                 if (service.c >= value) {
-                    if ((service.c - value) <= minDiff) {
-                        for (let i=start+1; i < end; i++) {
-                            if (booking.get(service.name)[i] == 1) {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
+                    if ((service.c - value) < minDiff) {
+                        if (timeslotIsFree(service.name, start, end)) {
                             closest = service.name;
                             minDiff = service.c - value;
                         }
@@ -131,15 +176,8 @@ function func2(ss, start, end, criteria) {
                     if (closest == "") {
                         closest = service.name;
                     }
-                    if (value - (service.c) <= minDiff) {
-                        for (let i=start+1; i < end; i++) {
-                            if (booking.get(service.name)[i] == 1) {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
+                    if (value - (service.c) < minDiff) { 
+                        if (timeslotIsFree(service.name, start, end)) {
                             closest = service.name;
                             minDiff = value - service.c;
                         }
@@ -150,13 +188,12 @@ function func2(ss, start, end, criteria) {
 
         // Output the result
         if (closest == "") {
-            console.log("Sorry")
+            console.log("Sorry");
         } else {
-            for (let i=start; i <= end; i++) {
-                booking.get(closest)[i] = 1;
-            }
+            updateBooking(closest, start, end);
             console.log(closest);
         }
+
     } else if (criteria[0] == "r") {
         // Parse criteria value
         value = parseHelper(criteria[0], criteria.slice(1));
@@ -167,18 +204,10 @@ function func2(ss, start, end, criteria) {
 
         // Find the best matching sevice
         ss.forEach((service) => {
-            found = false;
             if (criteria.slice(1, 3) == ">=") {
                 if (service.r >= value) {
-                    if ((service.r - value) <= minDiff) {
-                        for (let i=start+1; i < end; i++) {
-                            if (booking.get(service.name)[i] == 1) {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
+                    if ((service.r - value) < minDiff) {
+                        if (timeslotIsFree(service.name, start, end)) {
                             closest = service.name;
                             minDiff = service.r - value;
                         }
@@ -190,15 +219,8 @@ function func2(ss, start, end, criteria) {
                         closest = service.name;
                     }
 
-                    if (value - service.r <= minDiff) {
-                        for (let i=start+1; i < end; i++) {
-                            if (booking.get(service.name)[i] == 1) {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
+                    if (value - service.r < minDiff) {
+                        if (timeslotIsFree(service.name, start, end)) {
                             closest = service.name;
                             minDiff = value - service.r;
                         }
@@ -209,13 +231,12 @@ function func2(ss, start, end, criteria) {
 
         // Output the result
         if (closest == "") {
-            console.log("Sorry")
+            console.log("Sorry");
         } else {
-            for (let i=start; i <= end; i++) {
-                booking.get(closest)[i] = 1;
-            }
+            updateBooking(closest, start, end);
             console.log(closest);
         }
+
     } else if (criteria.slice(0, 4) == "name") {
         // Parse criteria value
         value = parseHelper(criteria.slice(0, 4), criteria.slice(4));
@@ -225,19 +246,14 @@ function func2(ss, start, end, criteria) {
         }
 
         // Check timeslot availability
-        for (let i=start+1; i < end; i++) {
-            if (booking.get(value)[i] == 1) {
-                found = true;
-                console.log("Sorry")
-                return;
-            }
-        }
-        if (!found) {
-            for (let i=start; i <= end; i++) {
-                booking.get(value)[i] = 1;
-            }
+        if (timeslotIsFree(value, start, end)) {
+            updateBooking(value, start, end);
             console.log(value);
+        } else {
+            console.log("Sorry");
+            return;
         }
+
     } else {
         console.log("Invalid criteria" + criteria);
     }
@@ -257,6 +273,7 @@ func2(services, 16, 18, "r>=4"); // Sorry
 func2(services, 13, 17, "name=S1"); // Sorry 
 func2(services, 8, 9, "c<=1500"); // S2
 func2(services, 8, 9, "c<=1500"); // S1
+console.log("");
 
 
 
@@ -281,6 +298,7 @@ func3(1); // print 23
 func3(5); // print 21 
 func3(10); // print 16 
 func3(30); // print 6
+console.log("");
 
 
 
