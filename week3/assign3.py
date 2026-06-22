@@ -2,7 +2,7 @@ import urllib.request as request
 import json
 import csv
 
-# Task 1
+# Task 1-1
 src_cn = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
 src_eng = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
 
@@ -32,9 +32,20 @@ for hotel in h_list_eng:
 		get_eng_info[hotel["_id"]] = ["Name not found.", "Address not found."]
 	
 
-# Write hotel data to the hotel.csv file
-with open("hotel.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+# Write hotel data to the hotels.csv file
+with open("hotels.csv", mode = "w", newline = "", encoding = "utf-8") as file:
 	for hotel in h_list_cn:
 		writer = csv.writer(file)
 		writer.writerow([hotel["旅宿名稱"], get_eng_info[hotel["_id"]][0], hotel["地址"], 
 				   get_eng_info[hotel["_id"]][1], hotel["電話或手機號碼"], hotel["房間數"]])
+		
+
+# Task 1-2
+district_info = {}
+
+# # Write distric data to the districts.csv file
+# with open("hotel.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+# 	for hotel in district_info:
+# 		writer = csv.writer(file)
+# 		writer.writerow([hotel["旅宿名稱"], get_eng_info[hotel["_id"]][0], hotel["地址"], 
+# 				   get_eng_info[hotel["_id"]][1], hotel["電話或手機號碼"], hotel["房間數"]])
