@@ -5,7 +5,7 @@ import csv
 # Sources
 src_cn = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
 src_eng = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
-src_ppt = "https://www.ptt.cc/bbs/Steam/index.html"
+src_ptt = "https://www.ptt.cc/bbs/Steam/index.html"
 
 
 # Task 1-1
@@ -67,8 +67,24 @@ src_ppt = "https://www.ptt.cc/bbs/Steam/index.html"
 
 
 # Task 3
+import bs4
+
+
+
+# Create human-like request
+req = request.Request(src_ptt, headers = {
+	"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
+})
 
 # Retrieve data from website
-with request.urlopen(src_ppt) as response:
-		data_ppt = response.read().decode("utf-8")
-print(data_ppt)
+with request.urlopen(req) as response:
+		data_ptt = response.read().decode("utf-8")
+
+print(data_ptt)
+
+root = bs4.BeautifulSoup(data_ptt, "html.parser")
+# 找所有 class="title 的 div 標籤
+titles = root.find_all("div", class_="title")
+for title in titles:
+	if title.a != None:
+		print(title.a.string)
