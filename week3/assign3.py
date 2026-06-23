@@ -94,6 +94,8 @@ for page in range(page_num):
 			print(title.a.string, end=", ")
 		if like.span != None:
 			print(like.span.string, end=", ")
+
+		# Get time
 		print("Time")
 	
 
