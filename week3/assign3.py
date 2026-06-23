@@ -5,7 +5,6 @@ import csv
 # Sources
 src_cn = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
 src_eng = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
-src_ptt = "https://www.ptt.cc/bbs/Steam/index.html"
 
 
 # Task 1-1
@@ -69,35 +68,71 @@ src_ptt = "https://www.ptt.cc/bbs/Steam/index.html"
 # Task 3
 import bs4
 
-page_num = 3
+src_ptt = "https://www.ptt.cc/bbs/Steam/index.html"
+page_num = 3	# Number of pages to be retrieved
+article_info = {}	# Storing info for each article
 
 for page in range(page_num):
 
 	# Create human-like request
 	req = request.Request(src_ptt, headers = {
-		"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
+		"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 \
+						(KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
 	})
 
 	# Retrieve data from website
 	with request.urlopen(req) as response:
 			data_ptt = response.read().decode("utf-8")
 
-	# print(data_ptt)
-
 	root = bs4.BeautifulSoup(data_ptt, "html.parser")
-	# 找所有 class="title 的 div 標籤
-	title_divs = root.find_all("div", class_="r-ent")
+
+	# Find all div tag with class="r-ent"
+	title_divs = root.find_all("div", class_ = "r-ent")
 	for div in title_divs:
 		title = div.find("div", class_ = "title")
 		like = div.find("div", class_ = "nrec")
+		# Check if the article is deleted
 		if title.a != None:
-			print(title.a.string, end=", ")
-		if like.span != None:
-			print(like.span.string, end=", ")
+			article_info[title.a.string] = ["", ""]	 # Create an entry for the article
 
-		# Get time
-		print("Time")
-	
+			# Check if "like" is empty
+			if like.span != None:
+				article_info[title.a.string][0] = like.span.string
+
+
+			# Find the time info in the article page
+			# Retrieve info in the article page
+			article = request.Request("https://www.ptt.cc" + title.a["href"], headers = {
+				"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 \
+								(KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
+			})
+			
+			with request.urlopen(article) as response:
+				data_article = response.read().decode("utf-8")
+
+			root_article = bs4.BeautifulSoup(data_article, "html.parser")
+
+
+			# Target HTML element with string "時間"
+			time = root_article.find("span", class_="article-meta-tag", string = "時間")
+			
+			# Check if "time" is empty
+			if time != None:
+				article_info[title.a.string][1] = time.find_next_sibling("span", class_ = "article-meta-value").string
+			else:
+				# Article format might be the other one: Find time info in the other format
+				time = root_article.find("span", class_="f4 b7", string = " 時間 ")
+				if time != None:
+					article_info[title.a.string][1] = time.find_next_sibling("span", class_ = "b4").string.strip()
 
 	# Update url to next page
 	src_ptt = "https://www.ptt.cc" + root.find("a", string="‹ 上頁")["href"]
+
+# Write articles data to the articles.csv file
+with open("articles.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+	for article, info in article_info.items():
+		writer = csv.writer(file)
+		writer.writerow([article, info[0], info[1]])
+
+
+
