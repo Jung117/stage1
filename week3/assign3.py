@@ -18,8 +18,9 @@ h_list_cn = data_cn["list"]
 h_list_eng = data_eng["list"]
 
 
-# Dic for storing required English hotel info  
-get_eng_info = {}
+# Generate hotels.csv
+get_eng_info = {}	# Dict for storing required English hotel info 
+
 # Create an entry for each hotel
 for hotel in h_list_cn:
 	get_eng_info[hotel["_id"]] = ""
@@ -30,7 +31,7 @@ for hotel in h_list_eng:
 		get_eng_info[hotel["_id"]] = [hotel["hotel name"], hotel["address"]]
 	else:
 		get_eng_info[hotel["_id"]] = ["Name not found.", "Address not found."]
-	
+
 
 # Write hotel data to the hotels.csv file
 with open("hotels.csv", mode = "w", newline = "", encoding = "utf-8") as file:
@@ -40,12 +41,22 @@ with open("hotels.csv", mode = "w", newline = "", encoding = "utf-8") as file:
 				   get_eng_info[hotel["_id"]][1], hotel["電話或手機號碼"], hotel["房間數"]])
 		
 
-# Task 1-2
-district_info = {}
 
-# # Write distric data to the districts.csv file
-# with open("hotel.csv", mode = "w", newline = "", encoding = "utf-8") as file:
-# 	for hotel in district_info:
-# 		writer = csv.writer(file)
-# 		writer.writerow([hotel["旅宿名稱"], get_eng_info[hotel["_id"]][0], hotel["地址"], 
-# 				   get_eng_info[hotel["_id"]][1], hotel["電話或手機號碼"], hotel["房間數"]])
+# Task 1-2
+# Generate districs.csv
+district_info = {}	# Dict for storing district info: {"district": [hotels count, total rooms]}
+
+# Count hotels and sum room numbers by district
+for hotel in h_list_cn:
+	if hotel["地址"][3:6] not in district_info:
+		district_info[hotel["地址"][3:6]] = [1, int(hotel["房間數"])]
+	else:
+		district_info[hotel["地址"][3:6]][0] += 1
+		district_info[hotel["地址"][3:6]][1] += int(hotel["房間數"])
+
+
+# Write distric data to the districts.csv file
+with open("districts.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+	for district, counts in district_info.items():
+		writer = csv.writer(file)
+		writer.writerow([district, counts[0], counts[1]])
