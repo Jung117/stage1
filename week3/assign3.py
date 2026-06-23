@@ -69,22 +69,33 @@ src_ptt = "https://www.ptt.cc/bbs/Steam/index.html"
 # Task 3
 import bs4
 
+page_num = 3
 
+for page in range(page_num):
 
-# Create human-like request
-req = request.Request(src_ptt, headers = {
-	"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
-})
+	# Create human-like request
+	req = request.Request(src_ptt, headers = {
+		"User-Agent": "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
+	})
 
-# Retrieve data from website
-with request.urlopen(req) as response:
-		data_ptt = response.read().decode("utf-8")
+	# Retrieve data from website
+	with request.urlopen(req) as response:
+			data_ptt = response.read().decode("utf-8")
 
-print(data_ptt)
+	# print(data_ptt)
 
-root = bs4.BeautifulSoup(data_ptt, "html.parser")
-# 找所有 class="title 的 div 標籤
-titles = root.find_all("div", class_="title")
-for title in titles:
-	if title.a != None:
-		print(title.a.string)
+	root = bs4.BeautifulSoup(data_ptt, "html.parser")
+	# 找所有 class="title 的 div 標籤
+	title_divs = root.find_all("div", class_="r-ent")
+	for div in title_divs:
+		title = div.find("div", class_ = "title")
+		like = div.find("div", class_ = "nrec")
+		if title.a != None:
+			print(title.a.string, end=", ")
+		if like.span != None:
+			print(like.span.string, end=", ")
+		print("Time")
+	
+
+	# Update url to next page
+	src_ptt = "https://www.ptt.cc" + root.find("a", string="‹ 上頁")["href"]
