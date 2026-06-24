@@ -25,7 +25,7 @@ const attrPic = await fetch("https://cwpeng.github.io/test/assignment-3-2");
 const info = await attrInfo.json();
 const pic = await attrPic.json();
 
-const attrInfoPic = new Map();
+const attrInfoPic = new Map();  // { "serial number" : [name, first photo] }
 
 // Fetch name for each attraction
 info.rows.forEach(attr => {
@@ -39,24 +39,22 @@ pic.rows.forEach(attr => {
     attrInfoPic.get(attr.serial).push(pic.host + firstImage);
 });
 
-// Convert map into a list for rendering attraction info
-const attrList = [...attrInfoPic];
 
-// Render attraction info
+const attrList = [...attrInfoPic];  // Convert map into a list for rendering attraction info
+
+// Render attraction title and Picture
 for (let i = 1; i < 14; i++) {
     
     if (i < 4) {
-        
+        // Render attration in Bar 1 - 3
         let imgBlock = document.getElementById("img"+i);
         imgBlock.src = attrList[i-1][1][1];
         let title = imgBlock.nextElementSibling;
         title.textContent = attrList[i-1][1][0];
     } else {
-        console.log(i);
+        // Render attration in Content Block 1 - 10
         let divBlock = document.getElementById("div"+(i-3));
-        divBlock.style.backgroundImage =  `url('${attrList[i][1][1]}')`;
-        // console.log(divBlock);
-        console.log(attrList[i][1][1]);
+        divBlock.style.backgroundImage =  `url('${attrList[i-1][1][1]}')`;
         let title = divBlock.children[1];
         title.textContent = attrList[i-1][1][0];
     }
