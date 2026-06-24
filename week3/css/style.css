@@ -145,8 +145,11 @@ h1 {
     bottom: 0;
     width: 100%;
     text-align: center;
-    background: rgba(211, 211, 211, 0.5);
-    padding: 6px 0;
+    background: rgba(211, 211, 211, 0.7);
+    padding: 6px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cb1 {
