@@ -37,7 +37,7 @@ for hotel in h_list_eng:
 
 
 # Write hotel data to hotels.csv
-with open("hotels.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+with open("week3/hotels.csv", mode = "w", newline = "", encoding = "utf-8") as file:
 	for hotel in h_list_cn:
 		writer = csv.writer(file)
 		writer.writerow([hotel["旅宿名稱"], get_eng_info[hotel["_id"]][0], hotel["地址"], 
@@ -59,7 +59,7 @@ for hotel in h_list_cn:
 
 
 # Write distric data to districts.csv
-with open("districts.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+with open("week3/districts.csv", mode = "w", newline = "", encoding = "utf-8") as file:
 	for district, counts in district_info.items():
 		writer = csv.writer(file)
 		writer.writerow([district, counts[0], counts[1]])
@@ -134,7 +134,7 @@ for page in range(page_num):
 
 
 # Write articles data to articles.csv
-with open("articles.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+with open("week3/articles.csv", mode = "w", newline = "", encoding = "utf-8") as file:
 	for article, info in article_info.items():
 		writer = csv.writer(file)
 		writer.writerow([article, info[0], info[1]])
