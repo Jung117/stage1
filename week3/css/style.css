@@ -226,9 +226,7 @@ h1 {
 }
 
 .loadBtn {
-    display: block;
-    /* max-width: 20%; */
-    color: rgb(0, 0, 0);
+    display: none;
     padding: 10px 20px;
     cursor: pointer;
     overflow: hidden;
