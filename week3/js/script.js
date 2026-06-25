@@ -81,37 +81,51 @@ const mainContent =  document.querySelector('.mainContent');
  * @param {int} attrNum: Number of attraction divs to be created
  */
 function createAttrDiv(attrNum) {
+
     // Create new contentBlocks for loading more attrations
     const contentBlocks = document.createElement('div');
     contentBlocks.className = 'contentBlocks';
 
     // Create new attraction divs
     for (let i = 1; i <= attrNum; i++) {
+
+        // Create new content block
         const attrDiv = document.createElement('div');
         attrDiv.className = 'block cb' + i;
         attrDiv.id = 'div' + (attrBlockNum - 3 + i);
+        attrDiv.style.backgroundImage =  `url('${attrList[attrBlockNum -1 + i][1][1]}')`;
         contentBlocks.appendChild(attrDiv);
-
+        
+        // Create child "star" in the new content block
         const divBtn = document.createElement('button');
         divBtn.className = 'star';
-        contentBlocks.appendChild(divBtn);
+        attrDiv.appendChild(divBtn);
 
+        // Create child "title" in the new content block
         const divTitle = document.createElement('div');
-        divtitle.textContent = attrList[attrBlockNum + i][1][0];
-        contentBlocks.appendChild(divTitle);
-        
+        divTitle.textContent = attrList[attrBlockNum -1 + i][1][0];
+        attrDiv.appendChild(divTitle);
     }
+    // Append newly created content block in the contentBlocks' child
     mainContent.appendChild(contentBlocks);
 }
 
+
+/**
+ * Present more attraction info after clicking "Load More" button
+ */
 function loadMore() {
-    let attrNum = (attrList.length - attrBlockNum) < 10 ? attrList.length - attrBlockNum : 10;
-    
-    createAttrDiv(attrNum);
+    // Number of conent blocks need to be created
+    let createAttrNum = (attrList.length - attrBlockNum) < 10 ? attrList.length - attrBlockNum : 10;
+    createAttrDiv(createAttrNum);
 
     // Update attraction Num
+    attrBlockNum += createAttrNum;
 
     // Update load more button
+    if (attrBlockNum >= attrList.length) {
+        loadMoreBtn.style.display = 'none';
+    }
 }
 
 loadMoreBtn.addEventListener('click', loadMore);
