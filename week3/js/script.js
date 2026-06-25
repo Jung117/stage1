@@ -66,15 +66,21 @@ for (let i = 1; i < 14; i++) {
 console.log('Attr Num: '+ attrList.length);
 let attrBlockNum = 13;
 const loadMoreBtn = document.getElementById('loadBtn');
+const mainContent =  document.querySelector('.mainContent');    // Parent div to be appended
 
-// Check if there is more un-present attraction in attrList
-if (attrBlockNum < attrList.length) {
-    loadMoreBtn.style.display = 'block';
+
+/**
+ * Update the display of the Load More button
+ * Display none if there is no more attraction to add
+ */
+function updateLoadBtn() {
+    if (attrBlockNum < attrList.length) {
+       loadMoreBtn.style.display = 'block';
+    } else {
+        loadMoreBtn.style.display = 'none'
+    }
 }
 
-
-// Parent div to be appended
-const mainContent =  document.querySelector('.mainContent');
 
 /**
  * Create new content blocks for more attractions
@@ -82,31 +88,32 @@ const mainContent =  document.querySelector('.mainContent');
  */
 function createAttrDiv(attrNum) {
 
-    // Create new contentBlocks for loading more attrations
+    // Create new contentBlocks for loading more attractions
     const contentBlocks = document.createElement('div');
     contentBlocks.className = 'contentBlocks';
 
     // Create new attraction divs
     for (let i = 1; i <= attrNum; i++) {
 
-        // Create new content block
+        // Create a new content block as a child of contentBlocks
         const attrDiv = document.createElement('div');
         attrDiv.className = 'block cb' + i;
         attrDiv.id = 'div' + (attrBlockNum - 3 + i);
         attrDiv.style.backgroundImage =  `url('${attrList[attrBlockNum -1 + i][1][1]}')`;
         contentBlocks.appendChild(attrDiv);
         
-        // Create child "star" in the new content block
+        // Create a "star" button as a child of attrDiv
         const divBtn = document.createElement('button');
         divBtn.className = 'star';
+         divBtn.textContent = '★';
         attrDiv.appendChild(divBtn);
 
-        // Create child "title" in the new content block
+        // Create a "title" div as a child of attrDiv
         const divTitle = document.createElement('div');
         divTitle.textContent = attrList[attrBlockNum -1 + i][1][0];
         attrDiv.appendChild(divTitle);
     }
-    // Append newly created content block in the contentBlocks' child
+    // Append the newly created contentBlocks element as a child of mainContent
     mainContent.appendChild(contentBlocks);
 }
 
@@ -115,17 +122,16 @@ function createAttrDiv(attrNum) {
  * Present more attraction info after clicking "Load More" button
  */
 function loadMore() {
-    // Number of conent blocks need to be created
+    // Number of content blocks need to be created
     let createAttrNum = (attrList.length - attrBlockNum) < 10 ? attrList.length - attrBlockNum : 10;
     createAttrDiv(createAttrNum);
 
-    // Update attraction Num
+    // Update the count of displayed attraction blocks
     attrBlockNum += createAttrNum;
 
     // Update load more button
-    if (attrBlockNum >= attrList.length) {
-        loadMoreBtn.style.display = 'none';
-    }
+    updateLoadBtn();
 }
 
+updateLoadBtn();
 loadMoreBtn.addEventListener('click', loadMore);
