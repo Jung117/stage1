@@ -14,7 +14,6 @@ body {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    border: solid 2px black;
 }
 
 .formBlock {
@@ -23,7 +22,7 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     background-color: rgba(9, 9, 103, 0.9);
     color: white;
     text-align: center;
@@ -76,7 +75,15 @@ input {
 /* Medium screen size */
 @media (min-width: 600px) and (max-width: 1199px) {
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
+    }
+
+    h3, label {
+        font-size: 1.2rem;
+    }
+
+    input {
+        font-size: 1.1rem;
     }
 }
 
@@ -86,6 +93,14 @@ input {
 @media (max-width: 600px) {
     h1 {
         font-size: 1.5rem;
+    }
+
+    h3, label {
+        font-size: 1.1rem;
+    }
+
+    input {
+        font-size: 0.9rem;
     }
 }
 
