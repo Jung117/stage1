@@ -1,14 +1,28 @@
-<!doctype HTML>
-<html lang="en">
-	<head>
-		<title>Jung's Website</title>
-		<link rel="stylesheet" type="text/css" href="./css/style.css">
-		<script type="module" src="./js/script.js" defer></script>
-        <!-- Responsive viewport for mobile -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	</head>
+{% extends "base.html" %}
 
-	<body>
-    </body>
-    
-</html>
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+
+	<div>
+		<h1>歡迎光臨，請輸入信箱密碼</h1>
+		<div>
+			<form method="GET" action="/">
+				<span>登入系統</span>
+
+				<label for="email">信箱</label>
+    			<input type="text" id="email" name="email" placeholder="xxx@abc.com" required>
+
+				<label for="password">密碼</label>
+    			<input type="password" id="pwd" name="pwd" required>
+
+				<input type="checkbox" id="agree" name="agree" required>
+    			<label for="agree">同意條款</label>
+			</form>
+			
+		</div>
+    	<a href="{{ url_for('login_page') }}">登入</a>
+	</div>
+	
+
+{% endblock %}
