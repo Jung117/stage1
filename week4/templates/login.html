@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Login Page {% endblock %}
+
+{% block content %}
+
+	<div>
+		<h1>歡迎光臨，請輸入信箱密碼 Login Page</h1>
+		<div>
+			<form method="POST" action="/login">
+				<span>登入系統</span>
+
+				<label for="email">信箱</label>
+    			<input type="text" id="email" name="email" placeholder="xxx@abc.com" required>
+
+				<label for="password">密碼</label>
+    			<input type="password" id="pwd" name="pwd" required>
+
+				<input type="checkbox" id="agree" name="agree" required>
+    			<label for="agree">同意條款</label>
+
+                <button type="submit">登入</button>
+			</form>
+			
+		</div>
+	</div>
+	
+
+{% endblock %}

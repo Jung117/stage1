@@ -4,25 +4,30 @@
 
 {% block content %}
 
-	<div>
+	<div class="formBlock">
 		<h1>歡迎光臨，請輸入信箱密碼</h1>
-		<div>
-			<form method="GET" action="/">
-				<span>登入系統</span>
-
+		<form id="loginForm" method="GET" action="/">
+			<h3 class="loginText">登入系統</h3>
+			<div class="label">
 				<label for="email">信箱</label>
     			<input type="text" id="email" name="email" placeholder="xxx@abc.com" required>
+			</div>
 
+			<div class="label">
 				<label for="password">密碼</label>
-    			<input type="password" id="pwd" name="pwd" required>
+				<input type="password" id="pwd" name="pwd" required>
+			</div>
+				
+			<div class="label">
+				<input type="checkbox" id="agree" name="agree">
+				<label for="agree">同意條款</label>
+			</div>
 
-				<input type="checkbox" id="agree" name="agree" required>
-    			<label for="agree">同意條款</label>
-			</form>
+            <button class="loginBtn" type="submit">登入</button>
+		</form>
 			
-		</div>
-    	<a href="{{ url_for('login_page') }}">登入</a>
 	</div>
+	
 	
 
 {% endblock %}
