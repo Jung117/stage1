@@ -1,8 +1,7 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from urllib.parse import quote
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -43,4 +42,11 @@ async def logout(request):
     return templates.TemplateResponse(
             "logout.html",
             {"request": request}
+    )
+
+
+@app.get("/hotel/{id}")
+async def get_hotel(request: Request, id: str):
+    return templates.TemplateResponse(
+        request=request, name="item.html", context={"id": id}
     )

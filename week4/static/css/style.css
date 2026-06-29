@@ -19,7 +19,7 @@ body {
 
 .formBlock {
     margin: 10%;
-    border: solid 2px red;
+    border: solid 1px rgba(77, 76, 76, 0.8);
 }
 
 h1 {
@@ -31,7 +31,8 @@ h1 {
 }
 
 h3 {
-    margin-top: 20px;
+    margin: 20px 10px 10px 10px;
+    font-size: 1.3rem;
 }
 
 form {
@@ -41,11 +42,21 @@ form {
     align-items: center;
 }
 
-.label {
+.labelBlock {
     margin: 5px;
 }
 
-.loginBtn {
+label {
+    font-size: 1.3rem;
+    margin: 5px;
+}
+
+input {
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.loginBtn, .hotelBtn {
     margin: 10px 10px 20px 10px;
     padding: 5px 20px;
     background-color: rgba(77, 76, 76, 0.6);
@@ -55,7 +66,7 @@ form {
     border-radius: 5px;
 }
 
-.loginBtn:hover {
+.loginBtn:hover, .hotelBtn:hover {
     background-color: rgba(77, 76, 76, 0.9);
     border: solid 2px rgba(77, 76, 76, 0.9);
     
