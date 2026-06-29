@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Medium screen size */
+@media (min-width: 600px) and (max-width: 1199px) {
+    
+}
+
+
+
+/* Small screen size */
+@media (max-width: 600px) {
+    
+}
+
