@@ -6,7 +6,10 @@
 
 	<div class="errorBlock">
 		<h1>失敗頁面</h1>
-		<span>{{msg}}</span>
-    </div>
+		<div class="errorText">
+			<span>{{msg}}</span>
+			<a href="{{ url_for('home') }}">回到登入</a>
+		</div>
+	</div>
 	
 {% endblock %}

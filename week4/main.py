@@ -15,6 +15,11 @@ app.add_middleware(SessionMiddleware, secret_key = "jung-secret-key")
 # index.html
 @app.get("/")
 async def home(request: Request):
+
+    # Already logged in -> Redirect to the member page
+    if request.session.get("logged_in"):
+            return RedirectResponse(url = "/member", status_code = 303)
+    
     return templates.TemplateResponse(
         request = request, name = "index.html", context = {}
     )
@@ -23,10 +28,8 @@ async def home(request: Request):
 @app.post("/login")
 async def login(request: Request, email: str = Form(""), pwd: str = Form("")):
 
-        if request.session.get("logged_in"):
-            return RedirectResponse(url = "/member", status_code = 303)
-
-        if not email or not pwd: # email or password is empty
+        # email or password is empty
+        if not email or not pwd: 
             msg = "請輸入信箱和密碼"
         elif email == "abc@abc.com" and pwd == "abc":
             request.session["logged_in"] = True
@@ -53,7 +56,8 @@ async def error_msg(request: Request, msg: str = ""):
 # logout.html
 @app.get("/logout")
 async def logout(request: Request):
-    pass
+    request.session["logged_in"] = False
+    return RedirectResponse(url = "/", status_code = 303)
 
 
 # hotel.html
