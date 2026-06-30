@@ -6,16 +6,16 @@
 
 	<div class="formBlock">
 		<h1>歡迎光臨，請輸入信箱密碼</h1>
-		<form id="loginForm" method="POST" action="/login">
+		<form id="loginForm" method="POST" action="{{ url_for('login') }}">
 			<h3 class="loginText">登入系統</h3>
 			<div class="labelBlock">
 				<label for="email">信箱</label>
-    			<input type="text" id="email" name="email" placeholder=" xxx@abc.com">
+    			<input type="text" id="email" name="email" placeholder=" xxx@abc.com" required>
 			</div>
 
 			<div class="labelBlock">
 				<label for="password">密碼</label>
-				<input type="password" id="pwd" name="pwd" placeholder=" xxxxxx">
+				<input type="password" id="pwd" name="pwd" placeholder=" xxxxxxxxx" required>
 			</div>
 				
 			<div class="labelBlock">
@@ -35,10 +35,7 @@
     			<input type="number" id="number" name="number" placeholder=" 50">
 			</div>
             <button class="hotelBtn" type="submit">取得</button>
-		</form>
-			
+		</form>		
 	</div>
 	
-	
-
 {% endblock %}

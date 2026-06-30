@@ -15,7 +15,7 @@ app.add_middleware(SessionMiddleware, secret_key="wehelp-week4-secret-key")
 
 # index.html
 @app.get("/")
-async def index(request: Request):
+async def home(request: Request):
     return templates.TemplateResponse(
         request = request, name = "index.html", context = {}
     )
