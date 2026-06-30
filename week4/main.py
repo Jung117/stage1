@@ -42,9 +42,7 @@ async def member(request: Request):
 
 # ohoh.html
 @app.get("/ohoh")
-async def error_msg(request: Request):
-    # Error msg
-    msg = request.query_params.get("msg")
+async def error_msg(request: Request, msg: str = ""):
     return templates.TemplateResponse(request, "ohoh.html", {"msg": msg})
 
 
