@@ -28,6 +28,7 @@ async def login(request: Request, email: str = Form(...), pwd: str = Form(...)):
             request.session["logged_in"] = True
             return RedirectResponse(url="/member", status_code=303)
         else:
+            # 應導向 "/ohoh" 再用def get 顯示錯誤訊息(?)
             return RedirectResponse(
                 url="/ohoh?msg=信箱或密碼輸入錯誤", status_code=303)
         
