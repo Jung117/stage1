@@ -1,3 +1,4 @@
+// Login processing
 // Alert dialog for checkbox
 document.getElementById("loginForm").addEventListener("submit", function (e) {
     const checkbox = document.getElementById("agree");
@@ -9,7 +10,11 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     }
 });
 
+
+
 // Hotel info processing
+
+// Check if the input is valid and alert the user if it isn't
 document.getElementById("hotelForm").addEventListener("submit", function (e) {
     
     const hotelInput = document.getElementById("hotel_num");
@@ -20,3 +25,10 @@ document.getElementById("hotelForm").addEventListener("submit", function (e) {
         alert("請輸入正整數");
     }
 });
+
+
+// Parsing JSON
+
+// Hotel sources
+const hotel_cn = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch');
+const hotel_eng = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en');
