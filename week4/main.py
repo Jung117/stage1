@@ -28,22 +28,27 @@ async def login(request: Request, email: str = Form(...), pwd: str = Form(...)):
             request.session["logged_in"] = True
             return RedirectResponse(url="/member", status_code=303)
         else:
-            # 應導向 "/ohoh" 再用def get 顯示錯誤訊息(?)
             return RedirectResponse(
                 url="/ohoh?msg=信箱或密碼輸入錯誤", status_code=303)
         
-
 
 # member.html
 @app.get("/member")
 async def member(request: Request):
     return templates.TemplateResponse(request, "member.html")
-            
+
+
+# ohoh.html
+@app.get("/ohoh")
+async def error_msg(request: Request):
+    # Error msg
+    msg = request.query_params.get("msg")
+    return templates.TemplateResponse(request, "ohoh.html", {"msg": msg})
 
 
 # Logout.html
 @app.get("/logout")
-async def logout(request):
+async def logout(request: Request):
     pass
 
 
