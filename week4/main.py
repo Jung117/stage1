@@ -7,10 +7,10 @@ from starlette.middleware.sessions import SessionMiddleware
 
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory = "static"), name = "static")
+templates = Jinja2Templates(directory = "templates")
 # Session
-app.add_middleware(SessionMiddleware, secret_key="wehelp-week4-secret-key")
+app.add_middleware(SessionMiddleware, secret_key = "wehelp-week4-secret-key")
 
 
 # index.html
@@ -26,10 +26,12 @@ async def login(request: Request, email: str = Form(...), pwd: str = Form(...)):
     
         if email == "abc@abc.com" and pwd == "abc":
             request.session["logged_in"] = True
-            return RedirectResponse(url="/member", status_code=303)
+            return RedirectResponse(url = "/member", status_code = 303)
         else:
+            # 自訂的錯誤訊息
+            msg = "帳號或密碼輸入錯誤"
             return RedirectResponse(
-                url="/ohoh?msg=信箱或密碼輸入錯誤", status_code=303)
+                url = f"/ohoh?msg={msg}", status_code = 303)
         
 
 # member.html
