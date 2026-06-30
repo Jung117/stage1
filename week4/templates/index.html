@@ -28,11 +28,11 @@
 
 		<hr>
 
-		<form id="hotelForm" method="GET" action="/">
+		<form id="hotelForm" method="GET" action="{{ url_for('get_hotel', id=0) }}">
 			<h3>取得旅館資訊</h3>
 			<div class="labelBlock">
-				<label for="number">編號</label>
-    			<input type="number" id="number" name="number" placeholder=" 50">
+				<label for="hotel_num">編號</label>
+    			<input type="text" id="hotel_num" name="hotel_num" placeholder=" 50">
 			</div>
             <button class="hotelBtn" type="submit">取得</button>
 		</form>		
