@@ -86,6 +86,34 @@ input {
     font-size: 1.3rem;
 }
 
+/* Logout href */
+.memberText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.memberText a {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: rgb(99, 102, 145);
+    text-decoration: none;
+}
+
+.memberText a:visited {
+    color: rgb(99, 102, 145);
+}
+
+.memberText a:hover {
+    color: rgb(170, 9, 9);
+    transform: scale(1.05);
+}
+
+.memberText a:active {
+    transform: scale(0.97);
+}
+
 
 
 /* Medium screen size */
