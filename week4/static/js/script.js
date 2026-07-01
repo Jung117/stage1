@@ -1,55 +1,58 @@
-// // Login processing
-// // Alert dialog for checkbox
-// document.getElementById("loginForm").addEventListener("submit", function (e) {
-//     const checkbox = document.getElementById("agree");
+/* Task 1: Login processing */
+// Alert dialog for checkbox
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    const checkbox = document.getElementById("agree");
 
-//     // Check if the box is checked
-//     if (!checkbox.checked) {
-//         e.preventDefault();
-//         alert("請勾選同意條款");
-//     }
-// });
+    // Check if the box is checked
+    if (!checkbox.checked) {
+        e.preventDefault();
+        alert("請勾選同意條款");
+    }
+});
 
 
 
-// // Hotel info processing
-
-// // Check if the input is valid and alert the user if it isn't
-// document.getElementById("hotelForm").addEventListener("submit", function (e) {
+/* Task 4: Hotel search */
+// Check if the input is valid and alert the user if it isn't
+document.getElementById("hotelForm").addEventListener("submit", function (e) {
     
-//     const hotelInput = document.getElementById("hotel_num");
+    const hotelInput = document.getElementById("hotel_num");
 
-//     // Check if the input is postive integer
-//     if (!/^[1-9]\d*$/.test(hotelInput.value)) {
-//         e.preventDefault();
-//         alert("請輸入正整數");
-//     }
-// });
+    // Check if the input is postive integer
+    if (!/^[1-9]\d*$/.test(hotelInput.value)) {
+        e.preventDefault();
+        alert("請輸入正整數");
+    }
+});
 
 
-// Parsing JSON
-
+// Retrieve and parse hotel data
 // Hotel sources
-const hotel_cn_href = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch');
-const hotel_eng_href = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en');
-
-const hotel_cn = await hotel_cn_href.json();
-const hotel_eng = await hotel_eng_href.json();
-
-// console.log(Object.keys(hotel_cn));
-// console.log(hotel_cn);
+const hotelCn = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch');
+const hotelEng = await fetch('https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en');
+// Parse hotel info into JSON objects
+const dataCn = await hotelCn.json();
+const dataEng = await hotelEng.json();
 
 
-const hotel_info = new Map(); // { 'id' : [Chinese name, English name, Phone number] }
-hotel_cn.list.forEach(hotel => {
-    if (!hotel_info.get(hotel["_id"])) {
-        hotel_info.set(hotel["_id"], [hotel['旅宿名稱']]);
+// Start porcessing data and store in a dict object
+const hotelInfo = {};   // { 'id' : [Chinese name, English name, Phone number] }
+
+// Use id as key in hotelInfo and storing Chinese name as value
+dataCn.list.forEach(hotel => {
+    if (!(hotel["_id"] in hotelInfo)) {
+        hotelInfo[hotel["_id"]] = [[hotel['旅宿名稱']]];
     }
 })
 
-hotel_eng.list.forEach(hotel => {
-    hotel_info.get(hotel["_id"]).push(hotel['hotel name']);
-    hotel_info.get(hotel["_id"]).push(hotel["tel"]);
+// Add English name and phone number to the corresponding entry in hotelInfo
+dataEng.list.forEach(hotel => {
+    hotelInfo[hotel["_id"]].push(hotel['hotel name']);
+    hotelInfo[hotel["_id"]].push(hotel["tel"]);
 })
 
-console.log(hotel_info.get(216));
+// for (const id in hotelInfo) {
+//     console.log(hotelInfo[id].join("、"));
+// }
+
+
