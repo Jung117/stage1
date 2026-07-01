@@ -61,12 +61,9 @@ async def logout(request: Request):
 
 
 # hotel.html
-@app.get("/hotel/{id}")
+@app.get("/hotel/{hotel_num}")
 async def get_hotel(request: Request, hotel_num: int):
-    
-    if not hotel_num:
-         return RedirectResponse(url = "/", status_code = 303)
-    
     return templates.TemplateResponse(
-        request=request, name="hotel.html", context={"id": hotel_num}
+        request = request, name = "hotel.html", context = {"id": hotel_num}
     )
+    # return hotel_num

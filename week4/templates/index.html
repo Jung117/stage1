@@ -23,18 +23,18 @@
 				<label for="agree">同意條款</label>
 			</div>
 
-            <button class="loginBtn" type="submit">登入</button>
+            <button class="loginBtn">登入</button>
 		</form>
 
 		<hr>
 
-		<form id="hotelForm" method="GET" action="{{ url_for('get_hotel', id=0) }}">
+		<form id="hotelForm" method="GET" action="{{ url_for('get_hotel', hotel_num=0) }}">
 			<h3>取得旅館資訊</h3>
 			<div class="labelBlock">
 				<label for="hotel_num">編號</label>
-    			<input type="text" id="hotel_num" name="hotel_num" placeholder=" 50">
+    			<input type="text" id="hotel_num" placeholder=" 216">
 			</div>
-            <button class="hotelBtn" type="submit">取得</button>
+            <button id="hotelBtn" class="hotelBtn" onclick="getHotel()">取得</button>
 		</form>		
 	</div>
 	
