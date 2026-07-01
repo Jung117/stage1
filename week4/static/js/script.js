@@ -39,9 +39,8 @@ if (hotelForm) {    // Only valid when in index.html
 // Get user input and navigate to the corresponding page
 async function getHotel() {
 
-    /* Get user input for hotel id */
-    console.log("Start: ")
+    // Get user input for hotel id
     const hotelNum = document.getElementById("hotel_num").value;
-    
+    // Redirect to /hotel/{hotelNum} page
     window.location.href = `/hotel/${hotelNum}`;
 }
