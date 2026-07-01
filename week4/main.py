@@ -1,8 +1,11 @@
+import json
+
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
+from urllib import request as req
 
 
 app = FastAPI()
@@ -63,7 +66,38 @@ async def logout(request: Request):
 # hotel.html
 @app.get("/hotel/{hotel_num}")
 async def get_hotel(request: Request, hotel_num: int):
+    
+    # Sources of the hotel data
+    src_cn = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
+    src_eng = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
+
+    # Proccess hotel data and extract to lists
+    with req.urlopen(src_cn) as response:
+            data_cn = json.load(response)
+
+    with req.urlopen(src_eng) as response:
+            data_eng = json.load(response)
+
+    h_list_cn = data_cn["list"]
+    h_list_eng = data_eng["list"]
+
+    # Store required data into dict
+    hotels_data = {}
+    for hotel in h_list_cn:
+        if hotel["_id"] not in hotels_data:
+            hotels_data[hotel["_id"]] = [hotel["旅宿名稱"]]
+
+    for hotel in h_list_eng:
+        if hotel["_id"] in hotels_data:
+            hotels_data[hotel["_id"]] += [hotel["hotel name"], hotel["tel"]]
+
+
+    # Retrieve hotel info with it id
+    if hotel_num in hotels_data:
+        hotel_info = "、".join(hotels_data[hotel_num])
+    else:
+        hotel_info = "查詢不到相關資料"
     return templates.TemplateResponse(
-        request = request, name = "hotel.html", context = {"id": hotel_num}
+        request = request, name = "hotel.html", context = {"hotel_info": hotel_info}
     )
-    # return hotel_num
+    
