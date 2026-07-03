@@ -1,0 +1,70 @@
+/* ===== 全域設定 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+    /* 明亮和煦背景：暖色系多層漸層疊加營造柔和光感 */
+    background-color: #fdf6ec;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 214, 165, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(255, 236, 200, 0.4) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.4) 0px, rgba(255, 255, 255, 0.4) 1px, transparent 1px, transparent 12px),
+        linear-gradient(135deg, #fff8ef 0%, #fdecd8 100%);
+    background-attachment: fixed;
+}
+
+h2 {
+    color: #7a5230;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* ===== 按鈕區塊置中排列 ===== */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ===== 按鈕樣式 ===== */
+button {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #7a5230;
+    background: linear-gradient(180deg, #fff3e0 0%, #ffe4b8 100%);
+    border: 1px solid rgba(200, 150, 90, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(200, 150, 90, 0.25);
+}
+
+button:hover {
+    background: #a67c52;
+    color: #fff8ef;
+    border-color: rgba(122, 82, 48, 0.5);
+    transform: translateY(-3px) scale(1);
+    box-shadow:
+        0 8px 20px rgba(122, 82, 48, 0.35),
+        0 0 24px rgba(166, 124, 82, 0.4);
+    letter-spacing: 0.5px;
+}
+
+button:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 3px 8px rgba(200, 150, 90, 0.3);
+}
