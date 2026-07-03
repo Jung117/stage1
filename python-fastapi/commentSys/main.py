@@ -35,7 +35,7 @@ def create_message(body = Body(None)):  # 告訴他要從請求文本獲得資�
         [author, content]
     )
     con.commit()
-    return {"OK": True}
+    return {"ok": True}
 
 
 # 取得所有留言的 API
@@ -43,7 +43,7 @@ def create_message(body = Body(None)):  # 告訴他要從請求文本獲得資�
 def get_messages():
     # 連線到資料庫，取得留言傳回到前端
     cursor = con.cursor(dictionary=True) # 用 python 字典的形式把資料抓出來，預設是Tuple的形式
-    cursor.execute("SELECT * FROM message")
+    cursor.execute("SELECT * FROM message ORDER BY id ASC")
     data = cursor.fetchall()
     return data
 
@@ -55,7 +55,7 @@ def delete_message(id: int):
     cursor = con.cursor()
     cursor.execute("DELETE FROM message WHERE id=%s", [id])
     con.commit()
-    return {"OK": True}
+    return {"ok": True}
 
 # 一定要放最後面，否則會讓 /api/message 系列全部失效
 # 把目前資料夾掛載成靜態檔案來源
