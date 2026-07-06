@@ -20,8 +20,8 @@ CREATE TABLE member(
 
 **Screenshots：**
 
-![task2](imgs/T2-1.png)
-![task2](imgs/T2-2.png)
+![task2-1](imgs/T2-1.png)
+![task2-2](imgs/T2-2.png)
 
 ---
 
@@ -49,8 +49,8 @@ UPDATE member SET name = 'test2' WHERE email = 'test@test.com';
 
 **Screenshots：：**
 
-![task3](imgs/T3-1.png)
-![task3](imgs/T3-2.png)
+![task3-1](imgs/T3-1.png)
+![task3-2](imgs/T3-2.png)
 
 ---
 
