@@ -29,7 +29,7 @@ CREATE TABLE member(
 
 **SQL：**
 
-\`\`\`sql
+```sql
 INSERT INTO member(name, email, password) VALUES('test', 'test@test.com', 'test');
 
 SELECT * FROM member;
@@ -45,7 +45,7 @@ SELECT * FROM member WHERE name LIKE '%es%';
 SELECT * FROM member WHERE email = 'test@test.com' AND password = 'test';
 
 UPDATE member SET name = 'test2' WHERE email = 'test@test.com';
-\`\`\`
+```
 
 **Screenshots：：**
 
