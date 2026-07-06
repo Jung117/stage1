@@ -4,7 +4,7 @@
 
 **SQL：**
 
-\`\`\`sql
+```sql
 CREATE DATABASE website;
 
 CREATE TABLE member(
@@ -16,7 +16,7 @@ CREATE TABLE member(
   time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   PRIMARY KEY(id)
 );
-\`\`\`
+```
 
 **Screenshots：**
 
@@ -58,7 +58,7 @@ UPDATE member SET name = 'test2' WHERE email = 'test@test.com';
 
 **SQL：**
 
-\`\`\`sql
+```sql
 SELECT COUNT(*) FROM member;
 
 SELECT SUM(follower_count) FROM member;
@@ -66,7 +66,7 @@ SELECT SUM(follower_count) FROM member;
 SELECT AVG(follower_count) FROM member;
 
 SELECT AVG(follower_count) FROM (SELECT * FROM member ORDER BY follower_count DESC LIMIT 2) AS T2;
-\`\`\`
+```
 
 **Screenshots：**
 
@@ -78,7 +78,7 @@ SELECT AVG(follower_count) FROM (SELECT * FROM member ORDER BY follower_count DE
 
 **SQL：**
 
-\`\`\`sql
+```sql
 CREATE TABLE message(
   id INT UNSIGNED NOT NULL AUTO_INCREMENT, 
   member_id INT UNSIGNED NOT NULL, 
@@ -96,7 +96,7 @@ SELECT mes.*, mem.name FROM message AS mes LEFT JOIN member AS mem ON mes.member
 SELECT mem.email, AVG(mes.like_count) FROM message AS mes LEFT JOIN member AS mem ON mes.member_id = mem.id WHERE mem.email = 'test@test.com';  
 
 SELECT mem.email, AVG(mes.like_count) FROM message AS mes LEFT JOIN member AS mem ON mes.member_id = mem.id GROUP BY mem.email;
-\`\`\`
+```
 
 **Screenshots：**
 
