@@ -51,6 +51,12 @@ UPDATE member SET name = 'test2' WHERE email = 'test@test.com';
 
 ![task3-1](imgs/T3-1.png)
 ![task3-2](imgs/T3-2.png)
+![task3-3](imgs/T3-3.png)
+![task3-4](imgs/T3-4.png)
+![task3-5](imgs/T3-5.png)
+![task3-6](imgs/T3-6.png)
+![task3-7](imgs/T3-7.png)
+![task3-8](imgs/T3-8.png)
 
 ---
 
@@ -70,7 +76,10 @@ SELECT AVG(follower_count) FROM (SELECT * FROM member ORDER BY follower_count DE
 
 **Screenshots：**
 
-![task4](imgs/T4.png)
+![task4-1](imgs/T4-1.png)
+![task4-2](imgs/T4-2.png)
+![task4-3](imgs/T4-3.png)
+![task4-4](imgs/T4-4.png)
 
 ---
 
@@ -100,4 +109,8 @@ SELECT mem.email, AVG(mes.like_count) FROM message AS mes LEFT JOIN member AS me
 
 **Screenshots：**
 
-![task5](imgs/T5.png)
+![task5-1](imgs/T5-1.png)
+![task5-2](imgs/T5-2.png)
+![task5-3](imgs/T5-3.png)
+![task5-4](imgs/T5-4.png)
+![task5-5](imgs/T5-5.png)
