@@ -104,32 +104,37 @@ def retrieve_hotels_data():
     if hotels_cache and (time.time() - cache_updated_at < CACHE_TTL):
         return hotels_cache
 
-    # Process hotel data and extract into lists
-    with req.urlopen(SRC_CN) as response:
-        data_cn = json.load(response)
+    try:
+        # Process hotel data and extract into lists
+        with req.urlopen(SRC_CN) as response:
+            data_cn = json.load(response)
 
-    with req.urlopen(SRC_ENG) as response:
-        data_eng = json.load(response)
+        with req.urlopen(SRC_ENG) as response:
+            data_eng = json.load(response)
 
-    h_list_cn = data_cn["list"]
-    h_list_eng = data_eng["list"]
-
-
-    # Temporary dict to hold freshly fetched data before replacing the cache
-    new_data = {}
-
-    # Store required data into dict
-    for hotel in h_list_cn:
-        if hotel["_id"] not in new_data:
-            new_data[hotel["_id"]] = [hotel["旅宿名稱"]]
-
-    for hotel in h_list_eng:
-        if hotel["_id"] in new_data:
-            new_data[hotel["_id"]] += [hotel["hotel name"], hotel["tel"]]
+        h_list_cn = data_cn["list"]
+        h_list_eng = data_eng["list"]
 
 
-    # Update the hotel cache and its timestamp
-    hotels_cache = new_data
-    cache_updated_at = time.time()
+        # Temporary dict to hold freshly fetched data before replacing the cache
+        new_data = {}
+
+        # Store required data into dict
+        for hotel in h_list_cn:
+            if hotel["_id"] not in new_data:
+                new_data[hotel["_id"]] = [hotel["旅宿名稱"]]
+
+        for hotel in h_list_eng:
+            if hotel["_id"] in new_data:
+                new_data[hotel["_id"]] += [hotel["hotel name"], hotel["tel"]]
+
+
+        # Update the hotel cache and its timestamp
+        hotels_cache = new_data
+        cache_updated_at = time.time()
+    except Exception as e:
+        print(f"Failed to fetch hotel data: {e}")
+        # On failure, fall back to the existing cache (can be stale or empty)
+        return hotels_cache
 
     return hotels_cache
