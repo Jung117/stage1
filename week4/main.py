@@ -1,4 +1,5 @@
 import json
+import time
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import RedirectResponse
@@ -80,43 +81,55 @@ async def get_hotel(request: Request, hotel_num: int):
     )
 
 
+# Sources of the hotel data
+SRC_CN = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
+SRC_ENG = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
 
 # Cache for hotels' info
 hotels_cache = {}
+cache_updated_at = 0
+# Update data every 5 mins (Time To Live)
+CACHE_TTL = 300
   
 def retrieve_hotels_data():
     """ Retrieve and process hotel data and return a dict for all hotels
+        and update the cache as needed when the required time has passed
 
     Returns:
         dict: A dict storing hotel info in required format
     """
 
-    global hotels_cache
+    global hotels_cache, cache_updated_at
 
-    if hotels_cache:
+    if hotels_cache and (time.time() - cache_updated_at < CACHE_TTL):
         return hotels_cache
-    
-    # Sources of the hotel data
-    src_cn = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-ch"
-    src_eng = "https://resources-wehelp-taiwan-b986132eca78c0b5eeb736fc03240c2ff8b7116.gitlab.io/hotels-en"
 
     # Process hotel data and extract into lists
-    with req.urlopen(src_cn) as response:
-            data_cn = json.load(response)
+    with req.urlopen(SRC_CN) as response:
+        data_cn = json.load(response)
 
-    with req.urlopen(src_eng) as response:
-            data_eng = json.load(response)
+    with req.urlopen(SRC_ENG) as response:
+        data_eng = json.load(response)
 
     h_list_cn = data_cn["list"]
     h_list_eng = data_eng["list"]
 
+
+    # Temporary dict to hold freshly fetched data before replacing the cache
+    new_data = {}
+
     # Store required data into dict
     for hotel in h_list_cn:
-        if hotel["_id"] not in hotels_cache:
-            hotels_cache[hotel["_id"]] = [hotel["旅宿名稱"]]
+        if hotel["_id"] not in new_data:
+            new_data[hotel["_id"]] = [hotel["旅宿名稱"]]
 
     for hotel in h_list_eng:
-        if hotel["_id"] in hotels_cache:
-            hotels_cache[hotel["_id"]] += [hotel["hotel name"], hotel["tel"]]
+        if hotel["_id"] in new_data:
+            new_data[hotel["_id"]] += [hotel["hotel name"], hotel["tel"]]
+
+
+    # Update the hotel cache and its timestamp
+    hotels_cache = new_data
+    cache_updated_at = time.time()
 
     return hotels_cache
